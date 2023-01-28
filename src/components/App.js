@@ -5,12 +5,20 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 
 import { fetchImg } from '../services/PixabayApi';
+import Button from './Button/Button';
+import Loader from './Loader/Loader';
+import Modal from './Modal/Modal';
 
 class App extends Component {
   state = {
     query: '',
     page: 1,
     images: [],
+    error: null,
+    isLoading: false,
+    showModal: false,
+    largeImageURL: '',
+    webformatURL: '',
   };
 
   onSubmit = query => {
@@ -37,13 +45,22 @@ class App extends Component {
     }
   };
 
+  handleLoadMore = () => {
+    this.setState({ page: this.state.page + 1 }, () => {
+      this.fetchQuery(this.state.query);
+    });
+  };
+
   render() {
-    const { images } = this.state;
+    const { images, isLoading, largeImageURL, showModal } = this.state;
 
     return (
       <div className={css.App}>
         <Searchbar onSubmit={this.onSubmit} />
-        <ImageGallery images={images} />
+        <ImageGallery images={images} onShow={this.onShow} />
+        {images.length && <Button onClick={this.handleLoadMore} />}
+        {isLoading && <Loader />}
+        {showModal && <Modal onClose={this.onClose} image={largeImageURL} />}
       </div>
     );
   }
