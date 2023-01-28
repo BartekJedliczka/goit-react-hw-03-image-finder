@@ -51,6 +51,14 @@ class App extends Component {
     });
   };
 
+  onShow = url => {
+    this.setState({ showModal: true, largeImageURL: url });
+  };
+
+  onClose = () => {
+    this.setState({ showModal: false, largeImageURL: '' });
+  };
+
   render() {
     const { images, isLoading, largeImageURL, showModal } = this.state;
 
