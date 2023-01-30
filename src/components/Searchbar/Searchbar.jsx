@@ -3,9 +3,7 @@ import css from './Searchbar.module.css';
 import PropTypes from 'prop-types';
 
 class Searchbar extends Component {
-  state = {
-    query: '',
-  };
+  state = {};
 
   handleChange = e => {
     this.setState({ query: e.target.value.toLowerCase() });
