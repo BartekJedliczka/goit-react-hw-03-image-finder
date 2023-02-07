@@ -21,12 +21,20 @@ class App extends Component {
     webformatURL: '',
   };
 
-  onSubmit = query => {
-    if (query !== this.state.query) {
-      this.setState({ images: [], page: 1, query }, () => {
-        this.fetchQuery(query);
-      });
+  onSubmit = e => {
+    e.preventDefault();
+    if (this.state.query.trim() === '') {
+      alert('Enter your search query');
+      return;
     }
+
+    this.setState({ images: [], page: 1 }, () => {
+      this.fetchQuery(this.state.query);
+    });
+  };
+
+  handleChange = e => {
+    this.setState({ query: e.target.value.toLowerCase() });
   };
 
   fetchQuery = async valueQuery => {
@@ -62,7 +70,11 @@ class App extends Component {
 
     return (
       <div className={css.App}>
-        <Searchbar onSubmit={this.onSubmit} />
+        <Searchbar
+          onSubmit={this.onSubmit}
+          onChange={this.handleChange}
+          query={this.state.query}
+        />
         <ImageGallery images={images} onShow={this.onShow} />
         {images.length && <Button onClick={this.handleLoadMore} />}
         {isLoading && <Loader />}

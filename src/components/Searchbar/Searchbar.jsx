@@ -3,28 +3,16 @@ import css from './Searchbar.module.css';
 import PropTypes from 'prop-types';
 
 class Searchbar extends Component {
-  handleChange = e => {
-    this.setState({ query: e.target.value.toLowerCase() });
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    if (this.state.query.trim() === '') {
-      alert('Enter your search query');
-      return;
-    }
-    this.props.onSubmit(this.state.query);
-  };
   render() {
-    const { query } = this.props;
+    const { query, onSubmit, onChange } = this.props;
     return (
       <header className={css.Searchbar}>
-        <form className={css.SearchForm} onSubmit={this.handleSubmit}>
+        <form className={css.SearchForm} onSubmit={onSubmit}>
           <button type="submit" className={css.SearchForm__button}>
             <span className={css.SearchForm__button__label}>Search</span>
           </button>
           <input
-            onChange={this.handleChange}
+            onChange={onChange}
             className={css.SearchForm__input}
             type="text"
             autoComplete="off"
@@ -40,5 +28,7 @@ class Searchbar extends Component {
 
 Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  query: PropTypes.string,
 };
 export default Searchbar;
