@@ -3,8 +3,6 @@ import css from './Searchbar.module.css';
 import PropTypes from 'prop-types';
 
 class Searchbar extends Component {
-  state = {};
-
   handleChange = e => {
     this.setState({ query: e.target.value.toLowerCase() });
   };
@@ -15,11 +13,10 @@ class Searchbar extends Component {
       alert('Enter your search query');
       return;
     }
-
     this.props.onSubmit(this.state.query);
   };
-
   render() {
+    const { query } = this.props;
     return (
       <header className={css.Searchbar}>
         <form className={css.SearchForm} onSubmit={this.handleSubmit}>
@@ -33,7 +30,7 @@ class Searchbar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            value={this.state.query}
+            value={query}
           />
         </form>
       </header>
