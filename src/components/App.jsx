@@ -39,9 +39,7 @@ class App extends Component {
     } catch (error) {
       this.setState({ error });
     } finally {
-      setTimeout(() => {
-        this.setState({ isLoading: false });
-      }, 600);
+      this.setState({ isLoading: false });
     }
   };
 
